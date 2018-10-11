@@ -120,7 +120,6 @@ namespace ViewAsScript.Middlewares
                         break;
 
                     default:
-                        //_stream.WriteByte(ch);
                         length++;
                         break;
                 }
