@@ -6,12 +6,14 @@ namespace ViewAsScript.Middlewares
 {
     public class JavaScriptStream : Stream, IDisposable
     {
+        private static byte[] _DOCUMENT_WRITE_START = Encoding.UTF8.GetBytes("document.write(\"");
+        private static byte[] _DOCUMENT_WRITE_END = Encoding.UTF8.GetBytes("\");");
+        private static byte[] _NEWLINE = Encoding.UTF8.GetBytes("\\n");
+        private static byte[] _QUOTE = Encoding.UTF8.GetBytes("\\\"");
+
         private readonly Stream _stream;
 
         private bool _dirty;
-
-        private static byte[] _NEWLINE = Encoding.UTF8.GetBytes("\\n");
-        private static byte[] _QUOTE = Encoding.UTF8.GetBytes("\\\"");
 
         public JavaScriptStream(Stream stream)
         {
@@ -25,9 +27,7 @@ namespace ViewAsScript.Middlewares
                 return;
 
             _dirty = true;
-
-            var start = Encoding.UTF8.GetBytes("document.write(\"");
-            _stream.WriteAsync(start);
+            _stream.WriteAsync(_DOCUMENT_WRITE_START);
         }
 
         private void EnsurePostfix()
@@ -35,8 +35,7 @@ namespace ViewAsScript.Middlewares
             if (!_dirty)
                 return;
 
-            var postfix = Encoding.UTF8.GetBytes("\");");
-            _stream.WriteAsync(postfix);
+            _stream.WriteAsync(_DOCUMENT_WRITE_END);
         }
 
         public new void Dispose()
