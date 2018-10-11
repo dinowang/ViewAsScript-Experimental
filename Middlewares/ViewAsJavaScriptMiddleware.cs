@@ -32,7 +32,7 @@ namespace ViewAsScript.Middlewares
                     memoryStream.Position = 0;
                     using (var reader = new StreamReader(memoryStream))
                     {
-                        var html = new StreamReader(memoryStream).ReadToEnd();
+                        var html = reader.ReadToEnd();
                         html = Regex.Replace(html, @"(\r\n|\n|\r)", "\\n"); // 換行字元都改掉
                         html = Regex.Replace(html, @"\""", "\\\"");         // 要考慮逸出字元
                         html = $"document.write(\"{html}\");";
