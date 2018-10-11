@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ViewAsScript.Middlewares
 {
+    /// <summary>
+    /// ViewAsJavaScript middleware 的實驗版本，希望有比較小的 memory footprint
+    /// </summary>    
     public class ViewAsJavaScriptExperimentalMiddleware
     {
         private readonly RequestDelegate _next;
